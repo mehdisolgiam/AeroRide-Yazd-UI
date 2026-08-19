@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>AeroRide Navigation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        html,
+        body {
+
+            width: 100%;
+            min-height: 100vh;
+
+            background: #ffd89b;
+
+            background:
+                -webkit-linear-gradient(
+                    to right,
+                    #19547b,
+                    #ffd89b
+                );
+
+            background:
+                linear-gradient(
+                    to right,
+                    #19547b,
+                    #ffd89b
+                );
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                'Segoe UI',
+                Roboto,
+                Oxygen,
+                Ubuntu,
+                sans-serif;
+
+            color: white;
+        }
+
+
+        body {
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+
+            width: 100%;
+            max-width: 600px;
+
+            padding: 30px 35px;
+
+            background:
+                rgba(58, 58, 58, 0.15);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.3);
+
+            border-radius: 40px;
+
+            box-shadow:
+                0 25px 50px -12px
+                rgba(0, 0, 0, 0.5);
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .navigation-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+
+        .title {
+
+            font-family:
+                "Cinzel",
+                sans-serif;
+
+            font-size: 1.6rem;
+
+            font-weight: 600;
+
+            letter-spacing: 1px;
+
+            color: white;
+        }
+
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-btn {
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 15px;
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .back-btn:hover {
+
+            background:
+                rgba(255, 255, 255, 0.25);
+
+            transform:
+                scale(1.05);
+        }
+
+
+        .menu-icon {
+
+            width: 24px;
+            height: 24px;
+
+            object-fit: contain;
+        }
+
+
+        /* =========================
+           DIVIDER
+        ========================= */
+
+        hr {
+
+            width: 70%;
+
+            border: none;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent
+                );
+
+            margin:
+                12px auto 18px;
+        }
+
+
+        /* =========================
+           INFORMATION CARDS
+        ========================= */
+
+        .info-container {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .info-card {
+
+            min-height: 100px;
+
+            padding: 18px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            border-radius: 25px;
+
+            box-shadow:
+                inset 0 1px 4px
+                rgba(255, 255, 255, 0.15),
+
+                0 8px 20px
+                rgba(0, 0, 0, 0.18);
+        }
+
+
+        .info-icon {
+
+            font-size: 1.5rem;
+
+            margin-bottom: 7px;
+        }
+
+
+        .info-label {
+
+            font-size: 0.75rem;
+
+            color:
+                rgba(255, 255, 255, 0.7);
+
+            margin-bottom: 5px;
+        }
+
+
+        .info-value {
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            color: white;
+        }
+
+
+        /* =========================
+           LOCATION
+        ========================= */
+
+        .location-card {
+
+            width: 100%;
+
+            padding: 18px;
+
+            margin-bottom: 20px;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.22);
+
+            border-radius: 25px;
+
+            text-align: center;
+        }
+
+
+        .location-title {
+
+            font-family:
+                "Cinzel",
+                sans-serif;
+
+            font-size: 1rem;
+
+            margin-bottom: 12px;
+        }
+
+
+        .coordinates {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .coordinate {
+
+            padding:
+                8px 14px;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            border-radius: 15px;
+
+            font-size: 0.8rem;
+        }
+
+
+        /* =========================
+           MAP
+        ========================= */
+
+        #map {
+
+            width: 100%;
+
+            height: 280px;
+
+            margin-top: 5px;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* =========================
+           CURRENT LOCATION BUTTON
+        ========================= */
+
+        .location-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 18px;
+
+            border: none;
+
+            border-radius: 25px;
+
+            color: white;
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            background:
+                rgba(255, 255, 255, 0.18);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .location-btn:hover {
+
+            background:
+                rgba(255, 255, 255, 0.28);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                display: block;
+
+                padding: 0;
+            }
+
+
+            .container {
+
+                width: 100%;
+
+                max-width: none;
+
+                min-height: 100vh;
+
+                min-height: 100dvh;
+
+                padding:
+                    25px 18px;
+
+                border-radius: 0;
+
+                border: none;
+
+                box-shadow: none;
+            }
+
+
+            .title {
+
+                font-size:
+                    1.35rem;
+            }
+
+
+            .info-container {
+
+                gap: 10px;
+            }
+
+
+            .info-card {
+
+                min-height: 90px;
+
+                padding: 12px;
+            }
+
+
+            .info-value {
+
+                font-size:
+                    0.9rem;
+            }
+
+
+            #map {
+
+                height:
+                    240px;
+
+                border-radius:
+                    25px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="container">
+
+
+        <!-- =========================
+             HEADER
+        ========================= -->
+
+        <div class="navigation-header">
+
+            <h1 class="title">
+                Aero Nav
+            </h1>
+
+
+            <a
+                href="/"
+                class="back-btn">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=81iygwWJnoDA&format=png"
+                    class="menu-icon"
+                    alt="Home">
+
+            </a>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- =========================
+             INFORMATION
+        ========================= -->
+
+        <div class="info-container">
+
+
+            <!-- Distance -->
+
+            <div class="info-card">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=GGqZsTSr1KKc&format=png"
+                    class="info-icon"
+                    alt="Distance">
+
+                <div class="info-content">
+
+                    <span class="info-label">
+                        Distance Traveled
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="distanceValue">
+
+                        0.00 km
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- GPS Status -->
+
+            <div class="info-card">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=s0vJQMKvmaAl&format=png"
+                    class="info-icon"
+                    alt="Distance">
+
+                <div class="info-content">
+
+                    <span class="info-label">
+                        GPS Status
+                    </span>
+
+                    <span
+                        class="info-value"
+                        id="gps-is-connected">
+
+                        Connected
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             CURRENT LOCATION
+        ========================= -->
+
+        <div class="location-card">
+
+            <div class="location-title">
+                Current Location
+            </div>
+
+
+            <div class="coordinates">
+
+                <div class="coordinate">
+
+                    Latitude:
+                    <span id="latitude">
+                        30.4069
+                    </span>
+
+                </div>
+
+
+                <div class="coordinate">
+
+                    Longitude:
+                    <span id="longitude">
+                        55.0847
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             MAP
+        ========================= -->
+
+        <div id="map"></div>
+
+
+        <!-- =========================
+             LOCATION BUTTON
+        ========================= -->
+
+        <button
+            class="location-btn"
+            id="locationBtn">
+
+            📍 Go to Current Location
+
+        </button>
+
+
+    </main>
+
+
+    <!-- =========================
+         LEAFLET
+    ========================= -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+    <!-- =========================
+         MAP SCRIPT
+    ========================= -->
+
+    <script>
+
+        /* =========================
+           INITIAL GPS LOCATION
+        ========================= */
+
+        let latitude = 30.4069;
+
+        let longitude = 55.0847;
+
+
+        /* =========================
+           DISTANCE
+        ========================= */
+
+        let totalDistance = 0;
+
+        let previousLatitude = latitude;
+
+        let previousLongitude = longitude;
+
+
+        /*
+         * محاسبه فاصله بین دو مختصات GPS
+         * خروجی بر حسب کیلومتر
+         */
+
+        function calculateDistance(
+            lat1,
+            lon1,
+            lat2,
+            lon2
+        ) {
+
+            const R = 6371;
+
+            const dLat =
+                (lat2 - lat1)
+                * Math.PI / 180;
+
+            const dLon =
+                (lon2 - lon1)
+                * Math.PI / 180;
+
+
+            const a =
+                Math.sin(dLat / 2) *
+                Math.sin(dLat / 2)
+
+                +
+
+                Math.cos(
+                    lat1 * Math.PI / 180
+                )
+
+                *
+
+                Math.cos(
+                    lat2 * Math.PI / 180
+                )
+
+                *
+
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+
+
+            const c =
+                2 *
+                Math.atan2(
+                    Math.sqrt(a),
+                    Math.sqrt(1 - a)
+                );
+
+
+            return R * c;
+        }
+
+
+        /* =========================
+           MAP
+        ========================= */
+
+        const map =
+            L.map("map").setView(
+                [latitude, longitude],
+                15
+            );
+
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+
+                maxZoom: 19,
+
+                attribution:
+                    "© AeroRide Map"
+
+            }
+
+        ).addTo(map);
+
+
+        /* =========================
+           MARKER
+        ========================= */
+
+        const marker =
+            L.marker(
+                [latitude, longitude]
+            ).addTo(map);
+
+
+        marker.bindPopup(
+            "AeroRider - Current Location"
+        );
+
+
+        /* =========================
+           UPDATE GPS
+        ========================= */
+
+        function updateLocation(
+            newLatitude,
+            newLongitude
+        ) {
+
+            /*
+             * محاسبه فاصله از موقعیت قبلی
+             */
+
+            const distance =
+                calculateDistance(
+                    previousLatitude,
+                    previousLongitude,
+                    newLatitude,
+                    newLongitude
+                );
+
+
+            /*
+             * اضافه کردن به مسافت کل
+             */
+
+            totalDistance += distance;
+
+
+            /*
+             * ذخیره مختصات جدید
+             */
+
+            previousLatitude =
+                newLatitude;
+
+            previousLongitude =
+                newLongitude;
+
+
+            latitude =
+                newLatitude;
+
+            longitude =
+                newLongitude;
+
+
+            /*
+             * نمایش مختصات
+             */
+
+            document.getElementById(
+                "latitude"
+            ).textContent =
+                latitude.toFixed(6);
+
+
+            document.getElementById(
+                "longitude"
+            ).textContent =
+                longitude.toFixed(6);
+
+
+            /*
+             * نمایش مسافت
+             */
+
+            document.getElementById(
+                "distanceValue"
+            ).textContent =
+                totalDistance.toFixed(2)
+                + " km";
+
+
+            /*
+             * حرکت Marker
+             */
+
+            marker.setLatLng([
+                latitude,
+                longitude
+            ]);
+
+
+            /*
+             * حرکت نقشه
+             */
+
+            map.setView(
+                [
+                    latitude,
+                    longitude
+                ],
+                15
+            );
+
+        }
+
+
+        /* =========================
+           CURRENT LOCATION BUTTON
+        ========================= */
+
+        document
+            .getElementById("locationBtn")
+            .addEventListener(
+                "click",
+                function () {
+
+                    map.setView(
+                        [
+                            latitude,
+                            longitude
+                        ],
+                        17
+                    );
+
+                    marker.openPopup();
+
+                }
+            );
+
+
+        /* =========================
+           TEST GPS
+        ========================= */
+
+        /*
+         * این قسمت فقط برای تست است.
+         *
+         * وقتی GPS واقعی را به ESP32/STM32
+         * وصل کردی، این قسمت حذف می‌شود
+         * و مختصات واقعی جایگزین خواهد شد.
+         */
+
+        /*
+        setInterval(function () {
+
+            updateLocation(
+                latitude + 0.0001,
+                longitude + 0.0001
+            );
+
+        }, 5000);
+        */
+
+
+    </script>
+
+
+</body>
+
+</html>

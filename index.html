@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AeroRide</title>
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        html,
+        body {
+
+            width: 100%;
+            min-height: 100vh;
+
+            background: #ffd89b;
+
+            background:
+                -webkit-linear-gradient(
+                    to right,
+                    #19547b,
+                    #ffd89b
+                );
+
+            background:
+                linear-gradient(
+                    to right,
+                    #19547b,
+                    #ffd89b
+                );
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Oxygen,
+                Ubuntu,
+                sans-serif;
+
+            color: white;
+
+            transition:
+                background 0.4s ease,
+                color 0.3s ease;
+        }
+
+
+        body {
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+
+        /* =====================================================
+           DARK MODE - BODY
+        ===================================================== */
+
+        body.dark-mode {
+
+            background:
+                #0f172a;
+
+            background:
+                linear-gradient(
+                    to right,
+                    #020617,
+                    #1e293b
+                );
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .container {
+
+            width: 100%;
+            max-width: 600px;
+
+            padding: 30px 35px;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.3);
+
+            border-radius: 40px;
+
+            box-shadow:
+                0 25px 50px -12px
+                rgba(0, 0, 0, 0.5);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            transition:
+                background 0.3s ease,
+                border 0.3s ease;
+        }
+
+
+        body.dark-mode .container {
+
+            background:
+                rgba(15, 23, 42, 0.45);
+
+            border-color:
+                rgba(255, 255, 255, 0.18);
+        }
+
+
+        /* =====================================================
+           TOP BAR
+           Hamburger = LEFT
+           Battery   = RIGHT
+        ===================================================== */
+
+        .top-bar {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            direction: ltr;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* =====================================================
+           HAMBURGER
+        ===================================================== */
+
+        .hamburger-btn {
+
+            width: 42px;
+            height: 42px;
+
+            padding: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 5px;
+
+            cursor: pointer;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 15px;
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.15);
+
+            transition:
+                all 0.25s ease;
+
+            z-index: 1001;
+        }
+
+
+        .hamburger-btn span {
+
+            width: 19px;
+            height: 2px;
+
+            background: white;
+
+            border-radius: 5px;
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .hamburger-btn:hover {
+
+            background:
+                rgba(255, 255, 255, 0.22);
+
+            transform:
+                scale(1.04);
+        }
+
+
+        /* Hamburger -> X */
+
+        .hamburger-btn.active span:nth-child(1) {
+
+            transform:
+                translateY(7px)
+                rotate(45deg);
+        }
+
+
+        .hamburger-btn.active span:nth-child(2) {
+
+            opacity: 0;
+
+            transform:
+                scale(0);
+        }
+
+
+        .hamburger-btn.active span:nth-child(3) {
+
+            transform:
+                translateY(-7px)
+                rotate(-45deg);
+        }
+
+
+        /* =====================================================
+           BATTERY
+        ===================================================== */
+
+        .battery-display {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                8px 12px;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 18px;
+
+            box-shadow:
+                inset 0 1px 3px
+                rgba(255, 255, 255, 0.15),
+
+                0 8px 20px
+                rgba(0, 0, 0, 0.15);
+
+            color: white;
+        }
+
+
+        .battery-value {
+
+            font-size:
+                0.9rem;
+
+            font-weight:
+                600;
+        }
+
+
+        .battery-icon {
+
+            position: relative;
+
+            width: 30px;
+            height: 15px;
+
+            border:
+                2px solid white;
+
+            border-radius: 4px;
+
+            padding: 2px;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        .battery-icon::after {
+
+            content: "";
+
+            position: absolute;
+
+            right: -5px;
+
+            width: 3px;
+            height: 6px;
+
+            background: white;
+
+            border-radius:
+                0 2px 2px 0;
+        }
+
+
+        .battery-level {
+
+            width: 85%;
+
+            height: 100%;
+
+            background:
+                #55e878;
+
+            border-radius: 2px;
+
+            transition:
+                width 0.4s ease;
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .txt {
+
+            background:
+                rgba(255, 255, 255, 0.1);
+
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.2);
+
+            padding:
+                15px 25px;
+
+            border-radius:
+                50px;
+
+            font-family:
+                "Cinzel",
+                sans-serif;
+
+            font-size:
+                1.8rem;
+
+            font-weight:
+                600;
+
+            color: white;
+
+            text-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.2);
+
+            margin-bottom:
+                5px;
+
+            letter-spacing:
+                1px;
+
+            text-align:
+                center;
+        }
+
+
+        /* =====================================================
+           HR
+        ===================================================== */
+
+        hr {
+
+            width: 70%;
+
+            border: none;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent
+                );
+
+            margin:
+                12px auto 18px;
+        }
+
+
+        /* =====================================================
+           CONTROL LAYOUT
+        ===================================================== */
+
+        .control-layout {
+
+            display: flex;
+
+            flex-direction: row;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 25px;
+
+            width: 100%;
+
+            direction: ltr;
+
+            margin:
+                5px 0 20px;
+        }
+
+
+        /* =====================================================
+           SPEED / ANGLE / TEMPERATURE
+        ===================================================== */
+
+        .speed-controls {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            direction: ltr;
+        }
+
+
+        .value-display {
+
+            width: 120px;
+
+            min-height: 52px;
+
+            padding:
+                8px 15px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius:
+                30px;
+
+            box-shadow:
+                inset 0 1px 4px
+                rgba(255, 255, 255, 0.15),
+
+                0 8px 20px
+                rgba(0, 0, 0, 0.2);
+
+            color: white;
+
+            user-select: none;
+        }
+
+
+        .value-label {
+
+            font-size:
+                0.75rem;
+
+            font-weight:
+                500;
+
+            color:
+                rgba(255, 255, 255, 0.7);
+
+            line-height:
+                1;
+
+            margin-bottom:
+                4px;
+        }
+
+
+        .value-number {
+
+            font-size:
+                1rem;
+
+            font-weight:
+                600;
+
+            color:
+                white;
+
+            text-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =====================================================
+           BUTTON GROUP
+        ===================================================== */
+
+        .button-group {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 14px;
+
+            padding: 18px;
+
+            width: 180px;
+            height: 180px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius:
+                38px;
+
+            box-shadow:
+                inset 0 1px 2px
+                rgba(255, 255, 255, 0.4),
+
+                0 20px 40px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        .button-group .btn {
+
+            width: 100%;
+            height: 100%;
+
+            padding: 0;
+            margin: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.20);
+
+            box-shadow:
+                inset 0 2px 8px
+                rgba(255, 255, 255, 0.15),
+
+                0 8px 20px
+                rgba(0, 0, 0, 0.2);
+
+            transition:
+                all 0.25s ease;
+
+            text-decoration:
+                none;
+
+            cursor:
+                pointer;
+        }
+
+
+        .button-group .btn:hover {
+
+            transform:
+                scale(1.05);
+
+            background:
+                rgba(255, 255, 255, 0.18);
+        }
+
+
+        .btn-logo {
+
+            width: 30px;
+            height: 30px;
+
+            object-fit:
+                contain;
+        }
+
+
+        /* =====================================================
+           ACTIVE BUTTON
+        ===================================================== */
+
+        .toggle-btn.active {
+
+            background:
+                rgba(50, 205, 100, 0.35);
+
+            border:
+                1px solid
+                rgba(100, 255, 140, 0.75);
+
+            box-shadow:
+
+                0 0 12px
+                rgba(50, 255, 100, 0.4),
+
+                inset 0 2px 8px
+                rgba(255, 255, 255, 0.25);
+
+            transform:
+                scale(1.03);
+        }
+
+
+        .toggle-btn.active .btn-logo {
+
+            filter:
+                brightness(0)
+                saturate(100%)
+                invert(75%)
+                sepia(40%)
+                saturate(900%)
+                hue-rotate(75deg)
+                brightness(105%);
+        }
+
+
+        /* =====================================================
+           MAP
+        ===================================================== */
+
+        #map {
+
+            width: 100%;
+
+            height: 280px;
+
+            margin-top: 20px;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* =====================================================
+           INPUT
+        ===================================================== */
+
+        .input {
+
+            padding:
+                12px 16px;
+
+            border: none;
+
+            border-radius:
+                50px;
+
+            font-size:
+                1rem;
+
+            background:
+                rgba(255, 255, 255, 0.15);
+
+            backdrop-filter:
+                blur(5px);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.2);
+
+            color:
+                white;
+
+            width:
+                120px;
+
+            text-align:
+                center;
+
+            box-shadow:
+                0 4px 15px -6px
+                rgba(0, 0, 0, 0.2);
+        }
+
+
+        .input:focus {
+
+            outline:
+                none;
+
+            background:
+                rgba(255, 255, 255, 0.25);
+        }
+
+
+        /* =====================================================
+           SUBMIT
+        ===================================================== */
+
+        .btn-submit {
+
+            background:
+                rgba(255, 255, 255, 0.2);
+
+            backdrop-filter:
+                blur(5px);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            color:
+                white;
+
+            padding:
+                12px 28px;
+
+            border-radius:
+                50px;
+
+            font-size:
+                1rem;
+
+            cursor:
+                pointer;
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .btn-submit:hover {
+
+            transform:
+                scale(1.04)
+                translateY(-2px);
+
+            background:
+                rgba(255, 255, 255, 0.35);
+        }
+
+
+        /* =====================================================
+           MENU OVERLAY
+        ===================================================== */
+
+        .menu-overlay {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            background:
+                rgba(0, 0, 0, 0.25);
+
+            backdrop-filter:
+                blur(3px);
+
+            opacity:
+                0;
+
+            visibility:
+                hidden;
+
+            z-index:
+                998;
+
+            transition:
+                all 0.3s ease;
+        }
+
+
+        .menu-overlay.active {
+
+            opacity:
+                1;
+
+            visibility:
+                visible;
+        }
+
+
+        /* =====================================================
+           SIDE MENU
+        ===================================================== */
+
+        .side-menu {
+
+            position:
+                fixed;
+
+            top:
+                15px;
+
+            left:
+                15px;
+
+            bottom:
+                15px;
+
+            width:
+                280px;
+
+            padding:
+                25px;
+
+            background:
+                rgba(40, 40, 40, 0.35);
+
+            backdrop-filter:
+                blur(25px);
+
+            -webkit-backdrop-filter:
+                blur(25px);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            border-radius:
+                30px;
+
+            box-shadow:
+                15px 20px 50px
+                rgba(0, 0, 0, 0.35),
+
+                inset 0 1px 2px
+                rgba(255, 255, 255, 0.2);
+
+            transform:
+                translateX(
+                    calc(-100% - 30px)
+                );
+
+            z-index:
+                999;
+
+            transition:
+                transform 0.35s ease;
+        }
+
+
+        .side-menu.active {
+
+            transform:
+                translateX(0);
+        }
+
+
+        body.dark-mode .side-menu {
+
+            background:
+                rgba(2, 6, 23, 0.65);
+
+            border-color:
+                rgba(255, 255, 255, 0.18);
+        }
+
+
+        /* =====================================================
+           MENU HEADER
+        ===================================================== */
+
+        .menu-header {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            margin-bottom:
+                35px;
+        }
+
+
+        .menu-title {
+
+            font-family:
+                "Cinzel",
+                sans-serif;
+
+            color:
+                white;
+
+            font-size:
+                1.1rem;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                1.5px;
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            padding:
+                0;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            cursor:
+                pointer;
+
+            backdrop-filter:
+                blur(10px);
+
+            -webkit-backdrop-filter:
+                blur(10px);
+
+            transition:
+                all 0.3s ease;
+        }
+
+
+        .theme-toggle:hover {
+
+            background:
+                rgba(255, 255, 255, 0.22);
+
+            transform:
+                scale(1.05);
+        }
+
+
+        .theme-icon {
+
+            width:
+                22px;
+
+            height:
+                22px;
+
+            object-fit:
+                contain;
+
+            transition:
+                transform 0.3s ease;
+        }
+
+
+        /* =====================================================
+           MENU ITEMS
+        ===================================================== */
+
+        .menu-items {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                12px;
+        }
+
+
+        .menu-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+            padding:
+                14px 18px;
+
+            border-radius:
+                18px;
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            font-size:
+                0.95rem;
+
+            background:
+                rgba(255, 255, 255, 0.07);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.12);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        body.dark-mode .menu-item {
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border-color:
+                rgba(255, 255, 255, 0.12);
+        }
+
+
+        .menu-item:hover {
+
+            background:
+                rgba(255, 255, 255, 0.18);
+
+            transform:
+                translateX(4px);
+
+            border-color:
+                rgba(255, 255, 255, 0.25);
+        }
+
+
+        .menu-icon {
+
+            width:
+                24px;
+
+            height:
+                24px;
+
+            object-fit:
+                contain;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                display:
+                    block;
+
+                padding:
+                    0;
+            }
+
+
+            .container {
+
+                width:
+                    100%;
+
+                max-width:
+                    none;
+
+                min-height:
+                    100vh;
+
+                min-height:
+                    100dvh;
+
+                padding:
+                    18px 15px;
+
+                border-radius:
+                    0;
+
+                border:
+                    none;
+
+                box-shadow:
+                    none;
+            }
+
+
+            .hamburger-btn {
+
+                width:
+                    36px;
+
+                height:
+                    36px;
+
+                border-radius:
+                    12px;
+
+                gap:
+                    4px;
+            }
+
+
+            .hamburger-btn span {
+
+                width:
+                    16px;
+
+                height:
+                    2px;
+            }
+
+
+            .battery-display {
+
+                padding:
+                    6px 9px;
+
+                gap:
+                    6px;
+
+                border-radius:
+                    15px;
+            }
+
+
+            .battery-value {
+
+                font-size:
+                    0.75rem;
+            }
+
+
+            .battery-icon {
+
+                width:
+                    25px;
+
+                height:
+                    13px;
+            }
+
+
+            .txt {
+
+                font-size:
+                    1.15rem;
+
+                padding:
+                    11px 17px;
+
+                letter-spacing:
+                    0.5px;
+            }
+
+
+            .control-layout {
+
+                gap:
+                    12px;
+            }
+
+
+            .button-group {
+
+                width:
+                    160px;
+
+                height:
+                    160px;
+
+                padding:
+                    15px;
+
+                gap:
+                    10px;
+            }
+
+
+            .value-display {
+
+                width:
+                    100px;
+
+                min-height:
+                    48px;
+
+                padding:
+                    7px 10px;
+            }
+
+
+            #map {
+
+                height:
+                    240px;
+
+                border-radius:
+                    25px;
+            }
+
+
+            .side-menu {
+
+                top:
+                    10px;
+
+                left:
+                    10px;
+
+                bottom:
+                    10px;
+
+                width:
+                    min(
+                        280px,
+                        calc(100% - 20px)
+                    );
+
+                border-radius:
+                    25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         MENU OVERLAY
+    ===================================================== -->
+
+    <div
+        class="menu-overlay"
+        id="menuOverlay">
+    </div>
+
+
+    <!-- =====================================================
+         SIDE MENU
+    ===================================================== -->
+
+    <nav
+        class="side-menu"
+        id="sideMenu">
+
+        <div
+            class="menu-header"
+            dir="ltr">
+
+            <span class="menu-title">
+                AeroRide
+            </span>
+
+
+            <!-- DARK / LIGHT BUTTON -->
+
+            <button
+                class="theme-toggle"
+                id="themeToggle"
+                type="button"
+                aria-label="Change theme">
+
+                <img
+                    id="themeIcon"
+                    class="theme-icon"
+                    src="https://img.icons8.com/?size=96&id=PVDRfonbwldO&format=png"
+                    alt="Theme">
+
+            </button>
+
+        </div>
+
+
+        <div class="menu-items">
+
+
+            <!-- Dashboard -->
+
+            <a
+                href="/"
+                class="menu-item">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=8xhovyHdOQzF&format=png"
+                    class="menu-icon"
+                    alt="Home">
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- Location -->
+
+            <a
+                href="#"
+                class="menu-item">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=XEUTBW9uuo1L&format=png"
+                    class="menu-icon"
+                    alt="Location">
+
+                <span>
+                    Location
+                </span>
+
+            </a>
+
+
+            <!-- Settings -->
+
+            <a
+                href="/settings"
+                class="menu-item">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=xyFoc6U1Hu3c&format=png"
+                    class="menu-icon"
+                    alt="Settings">
+
+                <span>
+                    Settings
+                </span>
+
+            </a>
+
+
+            <!-- Battery -->
+
+            <a
+                href="#"
+                class="menu-item">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=ta8XUOXsu565&format=png"
+                    class="menu-icon"
+                    alt="Battery Details">
+
+                <span>
+                    Battery Details
+                </span>
+
+            </a>
+
+            <a
+                href="#"
+                class="menu-item">
+
+                <img
+                    src="https://img.icons8.com/?size=96&id=4j4Rd2w7D0nH&format=png"
+                    class="menu-icon"
+                    alt="Navigation">
+
+                <span>
+                    Navigation
+                </span>
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN CONTAINER
+    ===================================================== -->
+
+    <main class="container">
+
+
+        <!-- TOP BAR -->
+
+        <div class="top-bar">
+
+
+            <!-- HAMBURGER -->
+
+            <button
+                class="hamburger-btn"
+                id="hamburgerBtn"
+                aria-label="Menu">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+
+            <!-- BATTERY -->
+
+            <div class="battery-display">
+
+                <span
+                    class="battery-value"
+                    id="batteryValue">
+
+                    85%
+
+                </span>
+
+
+                <div class="battery-icon">
+
+                    <div
+                        class="battery-level"
+                        id="batteryLevel">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1
+            dir="ltr"
+            class="txt">
+
+            Hello Dear AERORIDER
+
+        </h1>
+
+
+        <hr>
+
+
+        <!-- CONTROL AREA -->
+
+        <div class="control-layout">
+
+
+            <!-- VALUES -->
+
+            <div class="speed-controls">
+
+
+                <div class="value-display">
+
+                    <span class="value-label">
+                        Speed
+                    </span>
+
+                    <span
+                        class="value-number"
+                        id="speedValue">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <div class="value-display">
+
+                    <span class="value-label">
+                        Angle
+                    </span>
+
+                    <span
+                        class="value-number"
+                        id="AngleValue">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+                <div class="value-display">
+
+                    <span class="value-label">
+                        Battery Temp
+                    </span>
+
+                    <span
+                        class="value-number"
+                        id="BatteryTemperature">
+
+                        0
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- CONTROL BUTTONS -->
+
+            <div
+                class="button-group"
+                dir="rtl">
+
+
+                <!-- POWER -->
+
+                <a
+                    href="/power/toggle"
+                    class="btn toggle-btn"
+                    data-name="power">
+
+                    <img
+                        src="https://img.icons8.com/?size=96&id=qJtDDslG3GyJ&format=png"
+                        class="btn-logo"
+                        alt="Power">
+
+                </a>
+
+
+                <!-- WIFI -->
+
+                <a
+                    href="/wifi/toggle"
+                    class="btn toggle-btn"
+                    data-name="wifi">
+
+                    <img
+                        src="https://img.icons8.com/?size=96&id=EI66Wi29hy4c&format=png"
+                        class="btn-logo"
+                        alt="Wi-Fi">
+
+                </a>
+
+
+                <!-- BLUETOOTH -->
+
+                <a
+                    href="/bluetooth/toggle"
+                    class="btn toggle-btn"
+                    data-name="bluetooth">
+
+                    <img
+                        src="https://img.icons8.com/?size=96&id=QGcJuP3hyDsg&format=png"
+                        class="btn-logo"
+                        alt="Bluetooth">
+
+                </a>
+
+
+                <!-- GPS -->
+
+                <a
+                    href="/gps/toggle"
+                    class="btn toggle-btn"
+                    data-name="gps">
+
+                    <img
+                        src="https://img.icons8.com/?size=96&id=s0vJQMKvmaAl&format=png"
+                        class="btn-logo"
+                        alt="GPS">
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- MAP -->
+
+        <div id="map"></div>
+
+
+        <hr>
+
+
+        <!-- DELAY -->
+
+        <form
+            action="/setdelay"
+            method="GET">
+
+            <input
+                type="number"
+                class="input"
+                name="delay"
+                value="500"
+                step="500">
+
+            <input
+                class="btn-submit"
+                type="submit"
+                value="Make Delay">
+
+        </form>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         LEAFLET
+    ===================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+    <!-- =====================================================
+         MAP
+    ===================================================== -->
+
+    <script>
+
+        let latitude = 30.4069;
+        let longitude = 55.0847;
+
+
+        const map =
+            L.map("map").setView(
+                [latitude, longitude],
+                15
+            );
+
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                maxZoom: 19,
+
+                attribution:
+                    "© AeroRide Map"
+            }
+        ).addTo(map);
+
+
+        const marker =
+            L.marker(
+                [latitude, longitude]
+            ).addTo(map);
+
+
+        marker
+            .bindPopup("AeroRider")
+            .openPopup();
+
+    </script>
+
+
+    <!-- =====================================================
+         HAMBURGER MENU
+    ===================================================== -->
+
+    <script>
+
+        const hamburgerBtn =
+            document.getElementById(
+                "hamburgerBtn"
+            );
+
+        const sideMenu =
+            document.getElementById(
+                "sideMenu"
+            );
+
+        const menuOverlay =
+            document.getElementById(
+                "menuOverlay"
+            );
+
+
+        function toggleMenu() {
+
+            hamburgerBtn.classList.toggle(
+                "active"
+            );
+
+            sideMenu.classList.toggle(
+                "active"
+            );
+
+            menuOverlay.classList.toggle(
+                "active"
+            );
+        }
+
+
+        function closeMenu() {
+
+            hamburgerBtn.classList.remove(
+                "active"
+            );
+
+            sideMenu.classList.remove(
+                "active"
+            );
+
+            menuOverlay.classList.remove(
+                "active"
+            );
+        }
+
+
+        hamburgerBtn.addEventListener(
+            "click",
+            toggleMenu
+        );
+
+
+        menuOverlay.addEventListener(
+            "click",
+            closeMenu
+        );
+
+
+        document
+            .querySelectorAll(
+                ".menu-item"
+            )
+            .forEach(
+                function (item) {
+
+                    item.addEventListener(
+                        "click",
+                        closeMenu
+                    );
+
+                }
+            );
+
+    </script>
+
+
+    <!-- =====================================================
+         CONTROL BUTTONS
+    ===================================================== -->
+
+    <script>
+
+        const toggleButtons =
+            document.querySelectorAll(
+                ".toggle-btn"
+            );
+
+
+        toggleButtons.forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        this.classList.toggle(
+                            "active"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+    <!-- =====================================================
+         DARK MODE
+    ===================================================== -->
+
+    <script>
+
+        const themeToggle =
+            document.getElementById(
+                "themeToggle"
+            );
+
+        const themeIcon =
+            document.getElementById(
+                "themeIcon"
+            );
+
+
+        /*
+         * آیکون حالت روشن
+         */
+
+        const lightIcon =
+            "https://img.icons8.com/?size=96&id=PVDRfonbwldO&format=png";
+
+
+        /*
+         * آیکون حالت تاریک
+         */
+
+        const darkIcon =
+            "https://img.icons8.com/?size=96&id=x28CjTOCqeph&format=png";
+
+
+        /*
+         * تغییر آیکون
+         */
+
+        function updateThemeIcon() {
+
+            if (
+                document.body.classList.contains(
+                    "dark-mode"
+                )
+            ) {
+
+                themeIcon.src =
+                    darkIcon;
+
+                themeIcon.alt =
+                    "Dark Mode";
+
+            } else {
+
+                themeIcon.src =
+                    lightIcon;
+
+                themeIcon.alt =
+                    "Light Mode";
+            }
+        }
+
+
+        /*
+         * بررسی Theme ذخیره شده
+         */
+
+        const savedTheme =
+            localStorage.getItem(
+                "theme"
+            );
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add(
+                "dark-mode"
+            );
+        }
+
+
+        /*
+         * تنظیم آیکون اولیه
+         */
+
+        updateThemeIcon();
+
+
+        /*
+         * کلیک روی دکمه Theme
+         */
+
+        themeToggle.addEventListener(
+            "click",
+            function () {
+
+                document.body.classList.toggle(
+                    "dark-mode"
+                );
+
+
+                if (
+                    document.body.classList.contains(
+                        "dark-mode"
+                    )
+                ) {
+
+                    localStorage.setItem(
+                        "theme",
+                        "dark"
+                    );
+
+                } else {
+
+                    localStorage.setItem(
+                        "theme",
+                        "light"
+                    );
+                }
+
+
+                updateThemeIcon();
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
