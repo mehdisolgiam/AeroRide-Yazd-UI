@@ -5,25 +5,25 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AeroRide Settings</title>
 
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 
 
     <style>
+        /* =====================================================
+           RESET
+        ====================================================== */
 
         * {
             margin: 0;
@@ -32,19 +32,27 @@
         }
 
 
+        /* =====================================================
+           BODY
+        ====================================================== */
+
         html,
         body {
+
             width: 100%;
             min-height: 100vh;
 
             background: #ffd89b;
-            background: -webkit-linear-gradient(to right, #19547b, #ffd89b);
-            background: linear-gradient(to right, #19547b, #ffd89b);
+
+            background:
+                linear-gradient(to right,
+                    #19547b,
+                    #ffd89b);
 
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
-                'Segoe UI',
+                "Segoe UI",
                 Roboto,
                 Oxygen,
                 Ubuntu,
@@ -65,6 +73,10 @@
         }
 
 
+        /* =====================================================
+           MAIN CONTAINER
+        ====================================================== */
+
         .container {
 
             width: 100%;
@@ -84,12 +96,17 @@
             border-radius: 40px;
 
             box-shadow:
-                0 25px 50px -12px
-                rgba(0, 0, 0, 0.5);
+                0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
 
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
         .settings-header {
+
+            width: 100%;
 
             display: flex;
 
@@ -103,7 +120,9 @@
 
         .title {
 
-            font-family: "Cinzel", sans-serif;
+            font-family:
+                "Cinzel",
+                sans-serif;
 
             font-size: 1.6rem;
 
@@ -114,6 +133,10 @@
             color: white;
         }
 
+
+        /* =====================================================
+           BACK BUTTON
+        ====================================================== */
 
         .back-btn {
 
@@ -136,8 +159,10 @@
             border-radius: 15px;
 
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
 
-            transition: all 0.25s ease;
+            transition:
+                all 0.25s ease;
         }
 
 
@@ -146,7 +171,8 @@
             background:
                 rgba(255, 255, 255, 0.25);
 
-            transform: scale(1.05);
+            transform:
+                scale(1.05);
         }
 
 
@@ -159,34 +185,499 @@
         }
 
 
+        /* =====================================================
+           DIVIDER
+        ====================================================== */
+
         hr {
 
             width: 70%;
 
-            border: none;
-
             height: 1px;
 
-            background: linear-gradient(
-                to right,
-                transparent,
-                rgba(255, 255, 255, 0.3),
-                transparent
-            );
+            border: none;
 
-            margin: 12px auto 18px;
+            background:
+                linear-gradient(to right,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+
+            margin:
+                12px auto 18px;
         }
 
+
+        /* =====================================================
+           DRIVING MODE
+        ====================================================== */
+
+        .driving-mode {
+
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin:
+                5px 0 20px;
+        }
+
+
+        .mode-title {
+
+            width: 100%;
+
+            text-align: center;
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            color:
+                rgba(255, 255, 255, 0.9);
+
+            letter-spacing:
+                0.5px;
+        }
+
+
+        /* =====================================================
+           MODE SELECTOR
+        ====================================================== */
+
+        .mode-selector {
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 8px;
+
+            padding: 6px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.22);
+
+            border-radius: 25px;
+
+            box-shadow:
+
+                inset 0 1px 3px rgba(255, 255, 255, 0.15),
+
+                0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+
+        /* =====================================================
+           MODE BUTTON
+        ====================================================== */
+
+        .mode-btn {
+
+            width: 100%;
+
+            padding:
+                12px 8px;
+
+            border:
+                1px solid transparent;
+
+            border-radius: 19px;
+
+            background:
+                transparent;
+
+            color:
+                rgba(255, 255, 255, 0.7);
+
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .mode-btn:hover {
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            color: white;
+        }
+
+
+        /* =====================================================
+           ACTIVE MODE
+        ====================================================== */
+
+        .mode-btn.active {
+
+            background:
+                rgba(50, 205, 100, 0.35);
+
+            color: white;
+
+            border:
+                1px solid rgba(100, 255, 140, 0.75);
+
+            box-shadow:
+
+                0 0 12px rgba(50, 255, 100, 0.4),
+
+                inset 0 2px 8px rgba(255, 255, 255, 0.25);
+
+            transform:
+                scale(1.03);
+        }
+
+
+        /* =====================================================
+           CRUISE CONTROL
+        ====================================================== */
+
+        .cruise-control {
+
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin:
+                5px 0 20px;
+        }
+
+
+        .section-title {
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            color: white;
+
+            text-align: center;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =====================================================
+           CRUISE CARD
+        ====================================================== */
+
+        .cruise-card {
+
+            width: 100%;
+
+            padding:
+                18px 20px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.22);
+
+            border-radius: 25px;
+
+            box-shadow:
+
+                inset 0 1px 3px rgba(255, 255, 255, 0.15),
+
+                0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+
+        /* =====================================================
+           CRUISE MAIN
+        ====================================================== */
+
+        .cruise-main {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        /* =====================================================
+           SPEED DISPLAY
+        ====================================================== */
+
+        .cruise-speed {
+
+            display: flex;
+
+            align-items: baseline;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            direction: ltr;
+
+            pointer-events: none;
+        }
+
+
+        .cruise-value {
+
+            font-size: 2rem;
+
+            font-weight: 700;
+
+            color: white;
+
+            min-width: 45px;
+
+            text-align: center;
+
+            text-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .cruise-unit {
+
+            font-size: 0.85rem;
+
+            font-weight: 500;
+
+            color:
+                rgba(255, 255, 255, 0.65);
+        }
+
+
+        /* =====================================================
+           CONFIRM BUTTON
+        ====================================================== */
+
+        .cruise-confirm {
+
+            position: absolute;
+
+            left: 0;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
+
+            border-radius: 15px;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            cursor: pointer;
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .cruise-confirm img {
+
+            width: 24px;
+            height: 24px;
+
+            object-fit: contain;
+        }
+
+
+        .cruise-confirm:hover {
+
+            background:
+                rgba(50, 205, 100, 0.25);
+
+            border-color:
+                rgba(100, 255, 140, 0.7);
+
+            transform:
+                translateY(-50%) scale(1.05);
+        }
+
+
+        /* =====================================================
+           CONFIRMED STATE
+        ====================================================== */
+
+        .cruise-confirm.active {
+
+            background:
+                rgba(50, 205, 100, 0.35);
+
+            border:
+                1px solid rgba(100, 255, 140, 0.75);
+
+            box-shadow:
+
+                0 0 12px rgba(50, 255, 100, 0.4),
+
+                inset 0 2px 8px rgba(255, 255, 255, 0.25);
+        }
+
+
+        /* =====================================================
+           RANGE SLIDER
+        ====================================================== */
+
+        .cruise-slider {
+
+            width: 100%;
+
+            height: 6px;
+
+            appearance: none;
+            -webkit-appearance: none;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255, 255, 255, 0.2);
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           CHROME / EDGE / SAFARI
+        ====================================================== */
+
+        .cruise-slider::-webkit-slider-thumb {
+
+            appearance: none;
+            -webkit-appearance: none;
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            background:
+                #55e878;
+
+            border:
+                2px solid white;
+
+            box-shadow:
+                0 0 10px rgba(50, 255, 100, 0.5);
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           FIREFOX
+        ====================================================== */
+
+        .cruise-slider::-moz-range-thumb {
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            background:
+                #55e878;
+
+            border:
+                2px solid white;
+
+            box-shadow:
+                0 0 10px rgba(50, 255, 100, 0.5);
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           RANGE LABELS
+        ====================================================== */
+
+        .speed-range {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 10px;
+
+            font-size: 0.7rem;
+
+            color:
+                rgba(255, 255, 255, 0.55);
+        }
+
+
+        /* =====================================================
+           SAVE BUTTON
+        ====================================================== */
 
         .save-btn {
 
             width: 100%;
 
-            padding: 14px;
+            padding:
+                14px;
 
-            border: none;
+            border:
+                1px solid rgba(255, 255, 255, 0.25);
 
             border-radius: 25px;
+
+            background:
+                rgba(255, 255, 255, 0.18);
 
             color: white;
 
@@ -196,15 +687,11 @@
 
             cursor: pointer;
 
-            background:
-                rgba(255, 255, 255, 0.18);
-
-            border:
-                1px solid rgba(255, 255, 255, 0.25);
-
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
 
-            transition: all 0.25s ease;
+            transition:
+                all 0.25s ease;
         }
 
 
@@ -216,9 +703,239 @@
             border-color:
                 rgba(100, 255, 140, 0.7);
 
-            transform: translateY(-2px);
+            transform:
+                translateY(-2px);
         }
 
+
+        .save-btn:active {
+
+            transform:
+                translateY(0) scale(0.98);
+        }
+
+        /* =====================================================
+        WIFI SETTINGS
+        ===================================================== */
+
+        .settings-section {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        /* =====================================================
+        SETTINGS TITLE
+        ===================================================== */
+
+        .settings-title {
+
+            width: 100%;
+
+            text-align: center;
+
+            font-family:
+                "Cinzel",
+                sans-serif;
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            color: white;
+
+            letter-spacing: 0.8px;
+        }
+
+
+        /* =====================================================
+        SETTINGS CARD
+        ===================================================== */
+
+        .settings-card {
+
+            width: 100%;
+
+            padding: 20px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 16px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.22);
+
+            border-radius: 25px;
+
+            box-shadow:
+
+                inset 0 1px 3px rgba(255, 255, 255, 0.15),
+
+                0 8px 20px rgba(0, 0, 0, 0.18);
+        }
+
+
+        /* =====================================================
+        INPUT GROUP
+        ===================================================== */
+
+        .input-group {
+
+            width: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        /* =====================================================
+        LABEL
+        ===================================================== */
+
+        .input-group label {
+
+            font-size: 0.75rem;
+
+            color:
+                rgba(255, 255, 255, 0.7);
+
+            padding-right: 5px;
+        }
+
+
+        /* =====================================================
+        INPUT
+        ===================================================== */
+
+        .settings-input {
+
+            width: 100%;
+
+            padding:
+                13px 16px;
+
+            border-radius: 18px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.22);
+
+            outline: none;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            color: white;
+
+            font-size: 0.9rem;
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .settings-input::placeholder {
+
+            color:
+                rgba(255, 255, 255, 0.45);
+        }
+
+
+        .settings-input:focus {
+
+            background:
+                rgba(255, 255, 255, 0.16);
+
+            border-color:
+                rgba(255, 255, 255, 0.45);
+
+            box-shadow:
+                0 0 12px rgba(255, 255, 255, 0.08);
+        }
+
+
+        /* =====================================================
+        SAVE BUTTON
+        ===================================================== */
+
+        .save-btn {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 5px;
+
+            border-radius: 20px;
+
+            border:
+                1px solid rgba(100, 255, 140, 0.65);
+
+            background:
+                rgba(50, 205, 100, 0.30);
+
+            color: white;
+
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .save-btn:hover {
+
+            background:
+                rgba(50, 205, 100, 0.40);
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 0 15px rgba(50, 255, 100, 0.25);
+        }
+
+
+        .save-btn:active {
+
+            transform:
+                scale(0.98);
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
 
         @media (max-width: 600px) {
 
@@ -239,7 +956,8 @@
                 min-height: 100vh;
                 min-height: 100dvh;
 
-                padding: 25px 18px;
+                padding:
+                    25px 18px;
 
                 border-radius: 0;
 
@@ -254,8 +972,46 @@
                 font-size: 1.35rem;
             }
 
-        }
 
+            .mode-btn {
+
+                padding:
+                    11px 6px;
+
+                font-size:
+                    0.85rem;
+            }
+
+
+            .cruise-value {
+
+                font-size: 1.8rem;
+            }
+
+
+            .cruise-confirm {
+
+                width: 42px;
+                height: 42px;
+            }
+
+            .settings-card {
+
+                padding: 16px;
+
+                border-radius: 22px;
+            }
+
+            .settings-input {
+
+                padding:
+                    12px 14px;
+
+                font-size:
+                    0.85rem;
+            }
+
+        }
     </style>
 
 </head>
@@ -263,7 +1019,17 @@
 
 <body>
 
+
+    <!-- =====================================================
+         MAIN CONTAINER
+    ====================================================== -->
+
     <main class="container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
 
         <div class="settings-header">
 
@@ -271,18 +1037,518 @@
                 Aero Settings
             </h1>
 
-            <a href="/" class="back-btn"> <img src="https://img.icons8.com/?size=96&id=81iygwWJnoDA&format=png" class="menu-icon" alt="Home"> </a>
+
+            <a href="./index.html" class="back-btn" aria-label="Home">
+
+                <img src="https://img.icons8.com/?size=96&id=81iygwWJnoDA&format=png" class="menu-icon" alt="Home">
+
+            </a>
 
         </div>
 
-        
+        <hr>
 
-        <hr/>
-        <button class="save-btn">
+        <!-- =========================
+            WIFI SETTINGS
+        ========================= -->
+
+        <section class="settings-section" dir="ltr">
+
+            <div class="settings-title">
+                Wi-Fi Settings
+            </div>
+
+            <div class="settings-card">
+
+                <!-- Wi-Fi Username / SSID -->
+
+                <div class="input-group">
+
+                    <label for="wifiUsername">
+                        Wi-Fi Username
+                    </label>
+
+                    <input type="text" id="wifiUsername" name="username" class="settings-input"
+                        placeholder="Enter Wi-Fi username" autocomplete="off">
+
+                </div>
+
+
+                <!-- Wi-Fi Password -->
+
+                <div class="input-group">
+
+                    <label for="wifiPassword">
+                        Wi-Fi Password
+                    </label>
+
+                    <input type="password" id="wifiPassword" name="password" class="settings-input"
+                        placeholder="Enter Wi-Fi password" autocomplete="new-password">
+
+                </div>
+
+
+                <!-- SAVE BUTTON -->
+
+                <button type="button" class="save-btn" id="saveWifiBtn">
+
+                    Save Wi-Fi Settings
+
+                </button>
+
+            </div>
+
+        </section>
+
+        <br />
+
+
+        <!-- =================================================
+             DRIVING MODE
+        ================================================== -->
+
+        <section class="driving-mode">
+
+            <span class="mode-title">
+                Driving Mode
+            </span>
+
+
+            <div class="mode-selector" role="group" aria-label="Driving Mode">
+
+
+                <button class="mode-btn active" type="button" data-mode="eco">
+
+                    <span class="mode-name">
+                        Eco
+                    </span>
+
+                </button>
+
+
+                <button class="mode-btn" type="button" data-mode="normal">
+
+                    <span class="mode-name">
+                        Normal
+                    </span>
+
+                </button>
+
+
+                <button class="mode-btn" type="button" data-mode="sport">
+
+                    <span class="mode-name">
+                        Sport
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <hr>
+
+
+        <!-- =================================================
+             CRUISE CONTROL
+        ================================================== -->
+
+        <section class="cruise-control">
+
+            <span class="section-title">
+                Cruise Control
+            </span>
+
+
+            <div class="cruise-card">
+
+
+                <!-- SPEED + CONFIRM -->
+
+                <div class="cruise-main">
+
+
+                    <!-- CONFIRM BUTTON -->
+
+                    <button type="button" class="cruise-confirm" id="cruiseConfirm" aria-label="Confirm Cruise Speed">
+
+                        <img src="https://img.icons8.com/?size=96&id=1z4KhlNj9KyW&format=png" alt="Confirm">
+
+                    </button>
+
+
+                    <!-- SPEED -->
+
+                    <div class="cruise-speed">
+
+                        <span class="cruise-value" id="cruiseValue">
+
+                            1
+
+                        </span>
+
+                        <span class="cruise-unit">
+                            km/h
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SLIDER -->
+
+                <input type="range" id="cruiseSlider" class="cruise-slider" min="1" max="30" step="1" value="1">
+
+
+                <!-- RANGE -->
+
+                <div class="speed-range">
+
+                    <span>
+                        1 km/h
+                    </span>
+
+                    <span>
+                        30 km/h
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <hr>
+
+
+        <!-- =================================================
+             SAVE
+        ================================================== -->
+
+        <button class="save-btn" id="saveSettings" type="button">
+
             Save Settings
+
         </button>
 
+
     </main>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        /* =====================================================
+           DRIVING MODE
+        ====================================================== */
+
+        const modeButtons =
+            document.querySelectorAll(".mode-btn");
+
+        let selectedMode = "eco";
+
+
+        modeButtons.forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    modeButtons.forEach(
+                        function (btn) {
+
+                            btn.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    this.classList.add("active");
+
+
+                    selectedMode =
+                        this.dataset.mode;
+
+
+                    localStorage.setItem(
+                        "drivingMode",
+                        selectedMode
+                    );
+
+
+                    console.log(
+                        "Driving Mode:",
+                        selectedMode
+                    );
+
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+           LOAD SAVED DRIVING MODE
+        ====================================================== */
+
+        const savedMode =
+            localStorage.getItem("drivingMode");
+
+
+        if (savedMode) {
+
+            modeButtons.forEach(
+                function (button) {
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+
+                    if (
+                        button.dataset.mode ===
+                        savedMode
+                    ) {
+
+                        button.classList.add(
+                            "active"
+                        );
+
+                        selectedMode =
+                            savedMode;
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           CRUISE CONTROL
+        ====================================================== */
+
+        const cruiseSlider =
+            document.getElementById(
+                "cruiseSlider"
+            );
+
+        const cruiseValue =
+            document.getElementById(
+                "cruiseValue"
+            );
+
+        const cruiseConfirm =
+            document.getElementById(
+                "cruiseConfirm"
+            );
+
+
+        let cruiseSpeed =
+            parseInt(
+                cruiseSlider.value
+            );
+
+        let cruiseConfirmed = false;
+
+
+        /* =====================================================
+           UPDATE SPEED DISPLAY
+        ====================================================== */
+
+        function updateCruiseSpeed() {
+
+            let speed =
+                parseInt(
+                    cruiseSlider.value
+                );
+
+
+            /* Safety limits */
+
+            if (speed < 1) {
+
+                speed = 1;
+
+            }
+
+
+            if (speed > 30) {
+
+                speed = 30;
+
+            }
+
+
+            cruiseSpeed = speed;
+
+
+            cruiseSlider.value =
+                speed;
+
+
+            cruiseValue.textContent =
+                speed;
+
+
+            /* Changing the speed cancels confirmation */
+
+            cruiseConfirmed = false;
+
+            cruiseConfirm.classList.remove(
+                "active"
+            );
+
+
+            console.log(
+                "Cruise Speed:",
+                speed,
+                "km/h"
+            );
+
+        }
+
+
+        cruiseSlider.addEventListener(
+            "input",
+            updateCruiseSpeed
+        );
+
+
+        /* =====================================================
+           CONFIRM CRUISE SPEED
+        ====================================================== */
+
+        cruiseConfirm.addEventListener(
+            "click",
+            function () {
+
+                cruiseConfirmed =
+                    !cruiseConfirmed;
+
+
+                this.classList.toggle(
+                    "active",
+                    cruiseConfirmed
+                );
+
+
+                if (cruiseConfirmed) {
+
+                    localStorage.setItem(
+                        "cruiseSpeed",
+                        cruiseSpeed
+                    );
+
+
+                    console.log(
+                        "Cruise Control Confirmed:",
+                        cruiseSpeed,
+                        "km/h"
+                    );
+
+                } else {
+
+                    console.log(
+                        "Cruise Control Cancelled"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           LOAD SAVED CRUISE SPEED
+        ====================================================== */
+
+        const savedCruiseSpeed =
+            localStorage.getItem(
+                "cruiseSpeed"
+            );
+
+
+        if (savedCruiseSpeed) {
+
+            let speed =
+                parseInt(
+                    savedCruiseSpeed
+                );
+
+
+            if (speed >= 1 && speed <= 30) {
+
+                cruiseSpeed =
+                    speed;
+
+                cruiseSlider.value =
+                    speed;
+
+                cruiseValue.textContent =
+                    speed;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SAVE SETTINGS
+        ====================================================== */
+
+        const saveButton =
+            document.getElementById(
+                "saveSettings"
+            );
+
+
+        saveButton.addEventListener(
+            "click",
+            function () {
+
+                localStorage.setItem(
+                    "drivingMode",
+                    selectedMode
+                );
+
+
+                localStorage.setItem(
+                    "cruiseSpeed",
+                    cruiseSpeed
+                );
+
+
+                console.log(
+                    "Settings Saved"
+                );
+
+                console.log(
+                    "Mode:",
+                    selectedMode
+                );
+
+                console.log(
+                    "Cruise:",
+                    cruiseSpeed,
+                    "km/h"
+                );
+
+            }
+        );
+
+    </script>
+
 
 </body>
 

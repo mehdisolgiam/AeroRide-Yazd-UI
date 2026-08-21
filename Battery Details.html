@@ -5,26 +5,18 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AeroRide Battery</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 
 
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -88,8 +80,7 @@
             border-radius: 40px;
 
             box-shadow:
-                0 25px 50px -12px
-                rgba(0, 0, 0, 0.5);
+                0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
 
@@ -184,12 +175,10 @@
             height: 1px;
 
             background:
-                linear-gradient(
-                    to right,
+                linear-gradient(to right,
                     transparent,
                     rgba(255, 255, 255, 0.3),
-                    transparent
-                );
+                    transparent);
 
             margin: 12px auto 18px;
         }
@@ -252,22 +241,9 @@
             border-radius: 22px;
 
             box-shadow:
-                inset 0 1px 3px
-                rgba(255, 255, 255, 0.12),
+                inset 0 1px 3px rgba(255, 255, 255, 0.12),
 
-                0 8px 20px
-                rgba(0, 0, 0, 0.15);
-
-            transition: all 0.25s ease;
-        }
-
-
-        .battery-item:hover {
-
-            background:
-                rgba(255, 255, 255, 0.16);
-
-            transform: translateY(-2px);
+                0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
 
@@ -395,7 +371,141 @@
             transform: translateY(-2px);
         }
 
+        /* =====================================================
+   BATTERY DETAILS
+===================================================== */
 
+        .battery-details {
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+
+        /* =====================================================
+   BATTERY CARD
+===================================================== */
+
+        .battery-card {
+
+            min-height: 110px;
+
+            padding: 18px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            text-align: center;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.22);
+
+            border-radius: 25px;
+
+            box-shadow:
+
+                inset 0 1px 3px rgba(255, 255, 255, 0.15),
+
+                0 8px 20px rgba(0, 0, 0, 0.18);
+
+        }
+
+
+        /* =====================================================
+   BATTERY ICON
+===================================================== */
+
+        .battery-card-icon {
+
+            width: 30px;
+            height: 30px;
+
+            object-fit: contain;
+
+            margin-bottom: 3px;
+        }
+
+
+        /* =====================================================
+   LABEL
+===================================================== */
+
+        .battery-card-label {
+
+            font-size:
+                0.75rem;
+
+            color:
+                rgba(255, 255, 255, 0.65);
+        }
+
+
+        /* =====================================================
+   VALUE
+===================================================== */
+
+        .battery-card-value {
+
+            font-size:
+                1.15rem;
+
+            font-weight:
+                600;
+
+            color:
+                white;
+
+            direction: ltr;
+
+            text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =====================================================
+   UNIT
+===================================================== */
+
+        .battery-card-unit {
+
+            font-size:
+                0.7rem;
+
+            color:
+                rgba(255, 255, 255, 0.55);
+        }
+
+
+        /* =====================================================
+   HEALTH STATUS
+===================================================== */
+
+        .battery-health {
+
+            color:
+                #55e878;
+        }
 
         @media (max-width: 600px) {
 
@@ -438,8 +548,38 @@
 
                 border-radius: 20px;
             }
-        }
 
+            .battery-details {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+
+            .battery-card {
+
+                min-height: 95px;
+
+                padding: 12px;
+            }
+
+
+            .battery-card-icon {
+
+                width: 26px;
+                height: 26px;
+            }
+
+
+            .battery-card-value {
+
+                font-size:
+                    1rem;
+            }
+
+        }
     </style>
 
 </head>
@@ -453,7 +593,8 @@
 
             <h1 class="title"> Aero Battery </h1>
 
-            <a href="/" class="back-btn"> <img src="https://img.icons8.com/?size=96&id=81iygwWJnoDA&format=png" class="menu-icon" alt="Home"> </a>
+            <a href="./index.html" class="back-btn"> <img src="https://img.icons8.com/?size=96&id=81iygwWJnoDA&format=png"
+                    class="menu-icon" alt="Home"> </a>
 
         </div>
 
@@ -480,32 +621,8 @@
 
             <div class="battery-bar-container">
 
-                <div
-                    class="battery-bar"
-                    id="batteryBar">
+                <div class="battery-bar" id="batteryBar">
                 </div>
-
-            </div>
-
-
-            <!-- Battery Voltage -->
-
-            <div class="battery-item">
-
-                <div class="battery-info">
-
-                    <span class="battery-name">
-                        Voltage
-                    </span>
-
-                    <span class="battery-description">
-                        Current battery voltage
-                    </span>
-
-                </div>
-
-
-                <span class="battery-value" id="batteryVoltage"> 0 V </span>
 
             </div>
 
@@ -527,9 +644,7 @@
                 </div>
 
 
-                <span
-                    class="battery-value"
-                    id="batteryCurrent">
+                <span class="battery-value" id="batteryCurrent">
                     0 A
                 </span>
 
@@ -552,6 +667,107 @@
 
                 <span class="battery-value" id="batteryPowerUsage">0 W</span>
             </div>
+
+            <!-- =====================================================
+                BATTERY DETAILS
+            ===================================================== -->
+
+            <div class="battery-details">
+
+
+                <!-- =========================
+                    BATTERY HEALTH
+                ========================= -->
+
+                <div class="battery-card">
+
+                    <img src="https://img.icons8.com/?size=96&id=ta8XUOXsu565&format=png" class="battery-card-icon"
+                        alt="Battery Health">
+
+                    <span class="battery-card-label">
+                        Battery Health
+                    </span>
+
+                    <span class="battery-card-value battery-health" id="batteryHealth">
+
+                        98%
+
+                    </span>
+
+                </div>
+
+
+                <!-- =========================
+                    CHARGING CYCLES
+                ========================= -->
+
+                <div class="battery-card">
+
+                    <img src="https://img.icons8.com/?size=96&id=7lhJe4LCHiiE&format=png" class="battery-card-icon"
+                        alt="Charging Cycles">
+
+                    <span class="battery-card-label">
+                        Charging Cycles
+                    </span>
+
+                    <span class="battery-card-value" id="chargingCycles">
+
+                        127
+
+                    </span>
+
+                </div>
+
+
+                <!-- =========================
+                    BATTERY TEMPERATURE
+                ========================= -->
+
+                <div class="battery-card">
+
+                    <img src="https://img.icons8.com/?size=96&id=PS1oJILpqqiu&format=png" class="battery-card-icon"
+                        alt="Battery Temperature">
+
+                    <span class="battery-card-label">
+                        Battery Temperature
+                    </span>
+
+                    <span class="battery-card-value" id="batteryTemperature">
+
+                        32
+                        <span class="battery-card-unit"> °C </span>
+                    </span>
+
+
+
+                </div>
+
+
+                <!-- =========================
+                    BATTERY VOLTAGE
+                ========================= -->
+
+                <div class="battery-card">
+
+                    <img src="https://img.icons8.com/?size=96&id=s1oXbVuefB6a&format=png" class="battery-card-icon"
+                        alt="Battery Voltage">
+
+                    <span class="battery-card-label">
+                        Battery Voltage
+                    </span>
+
+                    <span class="battery-card-value" id="batteryVoltage">
+                        42.0
+                        <span class="battery-card-unit"> V </span>
+                    </span>
+
+
+
+                </div>
+
+            </div>
+
+
 
         </div>
 

@@ -5,34 +5,25 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AeroRide Navigation</title>
 
+    <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
 
     <!-- Leaflet -->
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 
     <style>
-
-        /* =========================
+        /* =====================================================
            RESET
-        ========================= */
+        ===================================================== */
 
         * {
             margin: 0;
@@ -41,9 +32,9 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            BODY
-        ========================= */
+        ===================================================== */
 
         html,
         body {
@@ -51,26 +42,15 @@
             width: 100%;
             min-height: 100vh;
 
-            background: #ffd89b;
-
             background:
-                -webkit-linear-gradient(
-                    to right,
+                linear-gradient(to right,
                     #19547b,
-                    #ffd89b
-                );
-
-            background:
-                linear-gradient(
-                    to right,
-                    #19547b,
-                    #ffd89b
-                );
+                    #ffd89b);
 
             font-family:
                 -apple-system,
                 BlinkMacSystemFont,
-                'Segoe UI',
+                "Segoe UI",
                 Roboto,
                 Oxygen,
                 Ubuntu,
@@ -91,9 +71,9 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            MAIN CONTAINER
-        ========================= */
+        ===================================================== */
 
         .container {
 
@@ -114,14 +94,13 @@
             border-radius: 40px;
 
             box-shadow:
-                0 25px 50px -12px
-                rgba(0, 0, 0, 0.5);
+                0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
 
-        /* =========================
+        /* =====================================================
            HEADER
-        ========================= */
+        ===================================================== */
 
         .navigation-header {
 
@@ -151,9 +130,9 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            BACK BUTTON
-        ========================= */
+        ===================================================== */
 
         .back-btn {
 
@@ -202,9 +181,9 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            DIVIDER
-        ========================= */
+        ===================================================== */
 
         hr {
 
@@ -215,21 +194,19 @@
             height: 1px;
 
             background:
-                linear-gradient(
-                    to right,
+                linear-gradient(to right,
                     transparent,
                     rgba(255, 255, 255, 0.3),
-                    transparent
-                );
+                    transparent);
 
             margin:
                 12px auto 18px;
         }
 
 
-        /* =========================
+        /* =====================================================
            INFORMATION CARDS
-        ========================= */
+        ===================================================== */
 
         .info-container {
 
@@ -240,7 +217,7 @@
 
             gap: 15px;
 
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
 
@@ -267,29 +244,35 @@
             -webkit-backdrop-filter: blur(12px);
 
             border:
-                1px solid
-                rgba(255, 255, 255, 0.25);
+                1px solid rgba(255, 255, 255, 0.25);
 
             border-radius: 25px;
 
             box-shadow:
-                inset 0 1px 4px
-                rgba(255, 255, 255, 0.15),
 
-                0 8px 20px
-                rgba(0, 0, 0, 0.18);
+                inset 0 1px 4px rgba(255, 255, 255, 0.15),
+
+                0 8px 20px rgba(0, 0, 0, 0.18);
         }
 
 
         .info-icon {
 
-            font-size: 1.5rem;
+            width: 32px;
+            height: 32px;
+
+            object-fit: contain;
 
             margin-bottom: 7px;
+
+            filter:
+                brightness(0) invert(1);
         }
 
 
         .info-label {
+
+            display: block;
 
             font-size: 0.75rem;
 
@@ -302,6 +285,8 @@
 
         .info-value {
 
+            display: block;
+
             font-size: 1rem;
 
             font-weight: 600;
@@ -310,9 +295,114 @@
         }
 
 
-        /* =========================
+        /* =====================================================
+           NAVIGATION INFORMATION
+        ===================================================== */
+
+        .navigation-info {
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .navigation-card {
+
+            min-height: 105px;
+
+            padding: 15px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 6px;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.22);
+
+            border-radius: 22px;
+
+            box-shadow:
+
+                inset 0 1px 3px rgba(255, 255, 255, 0.15),
+
+                0 8px 20px rgba(0, 0, 0, 0.18);
+
+            transition:
+                all 0.25s ease;
+        }
+
+
+        .navigation-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            background:
+                rgba(255, 255, 255, 0.13);
+        }
+
+
+        .navigation-label {
+
+            font-size:
+                0.75rem;
+
+            color:
+                rgba(255, 255, 255, 0.6);
+        }
+
+
+        .navigation-value {
+
+            font-size:
+                1.25rem;
+
+            font-weight:
+                600;
+
+            color:
+                white;
+
+            direction: ltr;
+
+            text-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .navigation-unit {
+
+            font-size:
+                0.7rem;
+
+            color:
+                rgba(255, 255, 255, 0.55);
+        }
+
+
+        /* =====================================================
            LOCATION
-        ========================= */
+        ===================================================== */
 
         .location-card {
 
@@ -329,8 +419,7 @@
             -webkit-backdrop-filter: blur(12px);
 
             border:
-                1px solid
-                rgba(255, 255, 255, 0.22);
+                1px solid rgba(255, 255, 255, 0.22);
 
             border-radius: 25px;
 
@@ -371,8 +460,7 @@
                 rgba(255, 255, 255, 0.10);
 
             border:
-                1px solid
-                rgba(255, 255, 255, 0.15);
+                1px solid rgba(255, 255, 255, 0.15);
 
             border-radius: 15px;
 
@@ -380,9 +468,9 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            MAP
-        ========================= */
+        ===================================================== */
 
         #map {
 
@@ -397,18 +485,16 @@
             overflow: hidden;
 
             border:
-                1px solid
-                rgba(255, 255, 255, 0.25);
+                1px solid rgba(255, 255, 255, 0.25);
 
             box-shadow:
-                0 15px 35px
-                rgba(0, 0, 0, 0.3);
+                0 15px 35px rgba(0, 0, 0, 0.3);
         }
 
 
-        /* =========================
+        /* =====================================================
            CURRENT LOCATION BUTTON
-        ========================= */
+        ===================================================== */
 
         .location-btn {
 
@@ -434,8 +520,7 @@
                 rgba(255, 255, 255, 0.18);
 
             border:
-                1px solid
-                rgba(255, 255, 255, 0.25);
+                1px solid rgba(255, 255, 255, 0.25);
 
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -455,9 +540,9 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            MOBILE
-        ========================= */
+        ===================================================== */
 
         @media (max-width: 600px) {
 
@@ -518,6 +603,27 @@
             }
 
 
+            .navigation-info {
+
+                gap: 10px;
+            }
+
+
+            .navigation-card {
+
+                min-height: 95px;
+
+                padding: 13px;
+            }
+
+
+            .navigation-value {
+
+                font-size:
+                    1rem;
+            }
+
+
             #map {
 
                 height:
@@ -527,7 +633,6 @@
                     25px;
             }
         }
-
     </style>
 
 </head>
@@ -535,12 +640,13 @@
 
 <body>
 
+
     <main class="container">
 
 
-        <!-- =========================
-             HEADER
-        ========================= -->
+        <!-- =====================================================
+         HEADER
+    ===================================================== -->
 
         <div class="navigation-header">
 
@@ -549,14 +655,9 @@
             </h1>
 
 
-            <a
-                href="/"
-                class="back-btn">
+            <a href="./index.html" class="back-btn">
 
-                <img
-                    src="https://img.icons8.com/?size=96&id=81iygwWJnoDA&format=png"
-                    class="menu-icon"
-                    alt="Home">
+                <img src="https://img.icons8.com/?size=96&id=81iygwWJnoDA&format=png" class="menu-icon" alt="Home">
 
             </a>
 
@@ -566,21 +667,19 @@
         <hr>
 
 
-        <!-- =========================
-             INFORMATION
-        ========================= -->
+        <!-- =====================================================
+         BASIC INFORMATION
+    ===================================================== -->
 
         <div class="info-container">
 
 
-            <!-- Distance -->
+            <!-- DISTANCE -->
 
             <div class="info-card">
 
-                <img
-                    src="https://img.icons8.com/?size=96&id=GGqZsTSr1KKc&format=png"
-                    class="info-icon"
-                    alt="Distance">
+                <img src="https://img.icons8.com/?size=96&id=GGqZsTSr1KKc&format=png" class="info-icon" alt="Distance">
+
 
                 <div class="info-content">
 
@@ -588,9 +687,8 @@
                         Distance Traveled
                     </span>
 
-                    <span
-                        class="info-value"
-                        id="distanceValue">
+
+                    <span class="info-value" id="distanceValue">
 
                         0.00 km
 
@@ -601,14 +699,12 @@
             </div>
 
 
-            <!-- GPS Status -->
+            <!-- GPS -->
 
             <div class="info-card">
 
-                <img
-                    src="https://img.icons8.com/?size=96&id=s0vJQMKvmaAl&format=png"
-                    class="info-icon"
-                    alt="Distance">
+                <img src="https://img.icons8.com/?size=96&id=s0vJQMKvmaAl&format=png" class="info-icon" alt="GPS">
+
 
                 <div class="info-content">
 
@@ -616,9 +712,8 @@
                         GPS Status
                     </span>
 
-                    <span
-                        class="info-value"
-                        id="gps-is-connected">
+
+                    <span class="info-value" id="gpsStatus">
 
                         Connected
 
@@ -631,9 +726,61 @@
         </div>
 
 
-        <!-- =========================
-             CURRENT LOCATION
-        ========================= -->
+        <!-- =====================================================
+         NAVIGATION INFORMATION
+    ===================================================== -->
+
+        <div class="navigation-info">
+
+
+            <!-- TRAVEL TIME -->
+
+            <div class="info-card">
+
+                <span class="navigation-label">
+                    Travel Time
+                </span>
+
+
+                <span class="navigation-value" id="travelTime">
+
+                    00:00:00
+
+                </span>
+
+            </div>
+
+
+            <!-- AVERAGE SPEED -->
+
+            <div class="info-card">
+
+                <span class="navigation-label">
+                    Average Speed
+                </span>
+
+
+                <span class="navigation-value" id="averageSpeed">
+
+                    0.0
+
+                </span>
+
+
+                <span class="navigation-unit">
+                    km/h
+                </span>
+
+            </div>
+
+        </div>
+
+        <hr/>
+
+
+        <!-- =====================================================
+         CURRENT LOCATION
+    ===================================================== -->
 
         <div class="location-card">
 
@@ -647,8 +794,9 @@
                 <div class="coordinate">
 
                     Latitude:
+
                     <span id="latitude">
-                        30.4069
+                        30.406900
                     </span>
 
                 </div>
@@ -657,8 +805,9 @@
                 <div class="coordinate">
 
                     Longitude:
+
                     <span id="longitude">
-                        55.0847
+                        55.084700
                     </span>
 
                 </div>
@@ -668,20 +817,18 @@
         </div>
 
 
-        <!-- =========================
-             MAP
-        ========================= -->
+        <!-- =====================================================
+         MAP
+    ===================================================== -->
 
         <div id="map"></div>
 
 
-        <!-- =========================
-             LOCATION BUTTON
-        ========================= -->
+        <!-- =====================================================
+         LOCATION BUTTON
+    ===================================================== -->
 
-        <button
-            class="location-btn"
-            id="locationBtn">
+        <button class="location-btn" id="locationBtn">
 
             📍 Go to Current Location
 
@@ -691,33 +838,28 @@
     </main>
 
 
-    <!-- =========================
-         LEAFLET
-    ========================= -->
+    <!-- =====================================================
+     LEAFLET
+===================================================== -->
 
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
     </script>
 
 
-    <!-- =========================
-         MAP SCRIPT
-    ========================= -->
-
     <script>
 
-        /* =========================
+        /* =====================================================
            INITIAL GPS LOCATION
-        ========================= */
+        ===================================================== */
 
         let latitude = 30.4069;
 
         let longitude = 55.0847;
 
 
-        /* =========================
-           DISTANCE
-        ========================= */
+        /* =====================================================
+           DISTANCE VARIABLES
+        ===================================================== */
 
         let totalDistance = 0;
 
@@ -726,10 +868,20 @@
         let previousLongitude = longitude;
 
 
-        /*
-         * محاسبه فاصله بین دو مختصات GPS
-         * خروجی بر حسب کیلومتر
-         */
+        /* =====================================================
+           TRAVEL TIME VARIABLES
+        ===================================================== */
+
+        let tripStarted = false;
+
+        let tripStartTime = null;
+
+        let travelTimer = null;
+
+
+        /* =====================================================
+           CALCULATE DISTANCE
+        ===================================================== */
 
         function calculateDistance(
             lat1,
@@ -740,13 +892,15 @@
 
             const R = 6371;
 
+
             const dLat =
-                (lat2 - lat1)
-                * Math.PI / 180;
+                (lat2 - lat1) *
+                Math.PI / 180;
+
 
             const dLon =
-                (lon2 - lon1)
-                * Math.PI / 180;
+                (lon2 - lon1) *
+                Math.PI / 180;
 
 
             const a =
@@ -783,9 +937,147 @@
         }
 
 
-        /* =========================
+        /* =====================================================
+           FORMAT TRAVEL TIME
+        ===================================================== */
+
+        function formatTravelTime(seconds) {
+
+            const hours =
+                Math.floor(seconds / 3600);
+
+
+            const minutes =
+                Math.floor(
+                    (seconds % 3600) / 60
+                );
+
+
+            const secs =
+                Math.floor(seconds % 60);
+
+
+            return (
+
+                String(hours).padStart(2, "0")
+
+                + ":" +
+
+                String(minutes).padStart(2, "0")
+
+                + ":" +
+
+                String(secs).padStart(2, "0")
+
+            );
+        }
+
+
+        /* =====================================================
+           UPDATE TRAVEL TIME
+        ===================================================== */
+
+        function updateTravelTime() {
+
+            if (!tripStarted || !tripStartTime) {
+                return;
+            }
+
+
+            const elapsedSeconds =
+                (Date.now() - tripStartTime) / 1000;
+
+
+            document.getElementById(
+                "travelTime"
+            ).textContent =
+                formatTravelTime(
+                    elapsedSeconds
+                );
+
+
+            /* =================================================
+               AVERAGE SPEED
+    
+               Speed = Distance / Time
+    
+               Distance -> km
+               Time     -> hours
+            ================================================= */
+
+            if (elapsedSeconds > 0) {
+
+                const elapsedHours =
+                    elapsedSeconds / 3600;
+
+
+                const averageSpeed =
+                    totalDistance /
+                    elapsedHours;
+
+
+                document.getElementById(
+                    "averageSpeed"
+                ).textContent =
+                    averageSpeed.toFixed(1);
+            }
+
+        }
+
+
+        /* =====================================================
+           START TRIP
+        ===================================================== */
+
+        function startTrip() {
+
+            if (tripStarted) {
+                return;
+            }
+
+
+            tripStarted = true;
+
+            tripStartTime =
+                Date.now();
+
+
+            travelTimer =
+                setInterval(
+                    updateTravelTime,
+                    1000
+                );
+
+        }
+
+
+        /* =====================================================
+           STOP TRIP
+        ===================================================== */
+
+        function stopTrip() {
+
+            if (!tripStarted) {
+                return;
+            }
+
+
+            tripStarted = false;
+
+
+            clearInterval(
+                travelTimer
+            );
+
+
+            travelTimer = null;
+
+        }
+
+
+        /* =====================================================
            MAP
-        ========================= */
+        ===================================================== */
 
         const map =
             L.map("map").setView(
@@ -808,9 +1100,9 @@
         ).addTo(map);
 
 
-        /* =========================
+        /* =====================================================
            MARKER
-        ========================= */
+        ===================================================== */
 
         const marker =
             L.marker(
@@ -823,18 +1115,27 @@
         );
 
 
-        /* =========================
-           UPDATE GPS
-        ========================= */
+        /* =====================================================
+           UPDATE GPS LOCATION
+        ===================================================== */
 
         function updateLocation(
             newLatitude,
             newLongitude
         ) {
 
-            /*
-             * محاسبه فاصله از موقعیت قبلی
-             */
+            /* =============================================
+               START TRIP
+    
+               اولین دریافت GPS یعنی شروع سفر
+            ============================================= */
+
+            startTrip();
+
+
+            /* =============================================
+               CALCULATE DISTANCE
+            ============================================= */
 
             const distance =
                 calculateDistance(
@@ -845,16 +1146,23 @@
                 );
 
 
-            /*
-             * اضافه کردن به مسافت کل
-             */
+            /* =============================================
+               IGNORE GPS NOISE
+    
+               اگر تغییر خیلی کوچک باشد،
+               به عنوان حرکت واقعی حساب نمی‌شود.
+            ============================================= */
 
-            totalDistance += distance;
+            if (distance > 0.003) {
+
+                totalDistance += distance;
+
+            }
 
 
-            /*
-             * ذخیره مختصات جدید
-             */
+            /* =============================================
+               SAVE NEW POSITION
+            ============================================= */
 
             previousLatitude =
                 newLatitude;
@@ -870,9 +1178,9 @@
                 newLongitude;
 
 
-            /*
-             * نمایش مختصات
-             */
+            /* =============================================
+               UPDATE COORDINATES
+            ============================================= */
 
             document.getElementById(
                 "latitude"
@@ -886,9 +1194,9 @@
                 longitude.toFixed(6);
 
 
-            /*
-             * نمایش مسافت
-             */
+            /* =============================================
+               UPDATE DISTANCE
+            ============================================= */
 
             document.getElementById(
                 "distanceValue"
@@ -897,9 +1205,19 @@
                 + " km";
 
 
-            /*
-             * حرکت Marker
-             */
+            /* =============================================
+               UPDATE GPS STATUS
+            ============================================= */
+
+            document.getElementById(
+                "gpsStatus"
+            ).textContent =
+                "Connected";
+
+
+            /* =============================================
+               MOVE MARKER
+            ============================================= */
 
             marker.setLatLng([
                 latitude,
@@ -907,9 +1225,9 @@
             ]);
 
 
-            /*
-             * حرکت نقشه
-             */
+            /* =============================================
+               MOVE MAP
+            ============================================= */
 
             map.setView(
                 [
@@ -919,12 +1237,19 @@
                 15
             );
 
+
+            /* =============================================
+               UPDATE AVERAGE SPEED
+            ============================================= */
+
+            updateTravelTime();
+
         }
 
 
-        /* =========================
+        /* =====================================================
            CURRENT LOCATION BUTTON
-        ========================= */
+        ===================================================== */
 
         document
             .getElementById("locationBtn")
@@ -940,33 +1265,57 @@
                         17
                     );
 
+
                     marker.openPopup();
 
                 }
             );
 
 
-        /* =========================
+        /* =====================================================
+           GPS ERROR
+        ===================================================== */
+
+        function gpsDisconnected() {
+
+            document.getElementById(
+                "gpsStatus"
+            ).textContent =
+                "Disconnected";
+
+        }
+
+
+        /* =====================================================
            TEST GPS
-        ========================= */
+           
+           این قسمت فقط برای تست است.
+    
+           وقتی GPS واقعی را به ESP32/STM32
+           وصل کردی، این بخش را حذف کن.
+        ===================================================== */
+
 
         /*
-         * این قسمت فقط برای تست است.
-         *
-         * وقتی GPS واقعی را به ESP32/STM32
-         * وصل کردی، این قسمت حذف می‌شود
-         * و مختصات واقعی جایگزین خواهد شد.
-         */
-
-        /*
+        
+        let testLatitude = latitude;
+        let testLongitude = longitude;
+    
+    
         setInterval(function () {
-
+    
+            testLatitude += 0.00015;
+    
+            testLongitude += 0.00015;
+    
+    
             updateLocation(
-                latitude + 0.0001,
-                longitude + 0.0001
+                testLatitude,
+                testLongitude
             );
-
+    
         }, 5000);
+    
         */
 
 
